@@ -12,6 +12,8 @@ import java.net.*;
 public class HTMLOutput {
     //declaracion atributos
     private static String html = "";
+    private static String css = "";
+    private static String js = "";
 
     /**
      * lee una pagina web .html ubicada en una direccion y parsea su contenido a un string
@@ -54,6 +56,41 @@ public class HTMLOutput {
         return imageBytes;
     }
     
+   
+    /**
+     * Lee un archivo css ubicado en una direcciony guarda su contenido en un string
+     * @param adress
+     * @return css string que contiene toda la lectura del archivo css
+     * @throws MalformedURLException
+     */
+    public static String readCSS(String adress) throws MalformedURLException {        
+        try {            
+            FileReader file = new FileReader("src/main/java/edu/escuelaing/arem/mediaserver/css"+adress);
+            BufferedReader reader = new BufferedReader(file);
+            String inputLine = "";
+            css = "";
+            while ((inputLine = reader.readLine()) != null) {
+                css += inputLine + "\n";
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }
+        return css;
+    }
+    public static String readJs(String adress) throws MalformedURLException {        
+        try {            
+            FileReader file = new FileReader("src/main/java/edu/escuelaing/arem/mediaserver/javascript"+adress);
+            BufferedReader reader = new BufferedReader(file);
+            String inputLine = "";
+            js = "";
+            while ((inputLine = reader.readLine()) != null) {
+                js += inputLine + "\n";
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }
+        return js;
+    }
     /**
      * crea un archivo .html a partir de codigo HTML en un string
      * @throws IOException se estan leyendo archivos

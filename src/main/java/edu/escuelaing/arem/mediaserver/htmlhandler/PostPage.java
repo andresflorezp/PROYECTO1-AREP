@@ -48,6 +48,15 @@ public class PostPage {
 			postPage(adress);
 		} else if (adress.contains(".png")) {
 			postImage(adress);
+		} else if (adress.contains(".jpg")) {
+			postImage(adress);
+
+		} else if (adress.contains(".css")) {
+			postCss(adress);
+
+		} else if (adress.contains(".js")) {
+			postJs(adress);
+
 		} else {
 			notFound();
 		}
@@ -99,23 +108,14 @@ public class PostPage {
 			DataOutputStream imageCode;
 			imageCode = new DataOutputStream(clientSocket.getOutputStream());
 			imageCode.writeBytes("HTTP/1.1 200 OK \r\n");
-			if (adress.endsWith(".png")) {
+			if (adress.contains(".png"))
 				imageCode.writeBytes("Content-Type: image/png\r\n");
-				imageCode.writeBytes("Content-Length: " + imageBytes.length);
-				imageCode.writeBytes("\r\n\r\n");
-				// hace visible la imagen en el servidor
-				imageCode.write(imageBytes);
-			} else {
-				File image = new File("src/main/java/edu/escuelaing/arem/mediaserver/images"+adress);
-				BufferedImage screenshot = ImageIO.read(image);
-				imageCode.writeBytes("Content-Type: image/png\r\n");
-				imageCode.writeBytes("Content-Length: " + imageBytes.length);
+			else
 				imageCode.writeBytes("Content-Type: image/jpeg\r\n");
-				ImageIO.write(screenshot, "jpg", imageCode); 
-				
-			}
-				
-
+			imageCode.writeBytes("Content-Length: " + imageBytes.length);
+			imageCode.writeBytes("\r\n\r\n");
+			// hace visible la imagen en el servidor
+			imageCode.write(imageBytes);
 			imageCode.close();
 		} catch (IOException ex) {
 			// si no encontro nada mande el error
@@ -124,6 +124,45 @@ public class PostPage {
 		}
 	}
 
+	private static void postCss(String adress) {
+		try {
+			HTMLOutput htmlOut = new HTMLOutput();
+			String outputLine;
+			String page = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/css\r\n" +
+			// con el nombre del archivo busquelo y añada el codigo html a la variable page
+			// parapublicarlo
+					"\r\n" + htmlOut.readCSS(adress);
+			outputLine = page;
+			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			// hace visible la pagina en el servidor
+			out.println(outputLine);
+			out.close();
+		} catch (IOException ex) {
+			// si no encontro nada mande el error
+			notFound();
+			System.err.println("Err: Unread File");
+		}
+	}
+	
+	private static void postJs(String adress) {
+		try {
+			HTMLOutput htmlOut = new HTMLOutput();
+			String outputLine;
+			String page = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/js\r\n" +
+			// con el nombre del archivo busquelo y añada el codigo html a la variable page
+			// parapublicarlo
+					"\r\n" + htmlOut.readJs(adress);
+			outputLine = page;
+			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			// hace visible la pagina en el servidor
+			out.println(outputLine);
+			out.close();
+		} catch (IOException ex) {
+			// si no encontro nada mande el error
+			notFound();
+			System.err.println("Err: Unread File");
+		}
+	}
 	/**
 	 * publica en el servidor una pagina con un mensaje de error en caso de no
 	 * encontrar el archivo solicitado,

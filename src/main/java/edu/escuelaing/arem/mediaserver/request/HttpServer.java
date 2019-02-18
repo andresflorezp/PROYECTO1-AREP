@@ -27,7 +27,7 @@ public class HttpServer {
      */
     public static void main(String[] args) throws IOException {
         //recibe solicitudes no concurrentes
-        while (true == true){
+        for(;;){
             //creacion sockets server y client
             serverSocket = ServerSckt.runServer();
             receiver = ClientSckt.receiveRequest(serverSocket);
