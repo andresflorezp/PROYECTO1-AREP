@@ -63,7 +63,18 @@ public class PostPage {
 		} else if (adress.contains(".js")) {
 			postJs(adress);
 		} else if (UrlMethod.containsKey(adress)) {
-			appWeb(adress);
+			try {
+				appWeb(adress);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		else
@@ -175,7 +186,7 @@ public class PostPage {
 		}
 	}
 
-	private static void appWeb(String adress) {
+	private static void appWeb(String adress) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		LeerFicheros leer = new LeerFicheros();
 		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
 		Method m = UrlMethod.get(adress);
@@ -200,15 +211,7 @@ public class PostPage {
 			response.flush();
 			response.close();
 
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		} catch (IOException ex) {
 			// si no encontro nada mande el error
 			notFound();

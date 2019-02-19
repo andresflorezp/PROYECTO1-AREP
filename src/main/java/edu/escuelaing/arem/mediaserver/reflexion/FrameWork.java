@@ -3,9 +3,9 @@ package edu.escuelaing.arem.mediaserver.reflexion;
 public class FrameWork {
 	
 	@Web("/cuadrado")
-	public static String cuadrado(int val) {
-		int re=val*val;
-		return String.valueOf(re);
+	public static String cuadrado() {
+		//int re=val*val;
+		return "4";
 	}
 	
 	@Prueba("/Data")
