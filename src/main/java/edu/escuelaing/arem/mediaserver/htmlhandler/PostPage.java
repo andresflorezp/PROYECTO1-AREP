@@ -209,9 +209,10 @@ public class PostPage {
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException ex) {
+			// si no encontro nada mande el error
+			notFound();
+			System.err.println("Err: Unread File");
 		}
 
 	}
