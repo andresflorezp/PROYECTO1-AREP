@@ -6,6 +6,7 @@
 package edu.escuelaing.arem.mediaserver.htmlhandler;
 
 import edu.escuelaing.arem.mediaserver.htmlhandler.URLRequest;
+import edu.escuelaing.arem.mediaserver.reflexion.LeerFicheros;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -15,9 +16,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 
@@ -43,6 +47,8 @@ public class PostPage {
 	 */
 	public static void postType(String adress, Socket cliSoc) throws IOException {
 		PostPage.clientSocket = cliSoc;
+		LeerFicheros leer = new LeerFicheros();
+		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
 		System.out.println("ADRESS POSTTYPE: " + adress);
 		if (adress.contains(".html")) {
 			postPage(adress);
@@ -56,8 +62,13 @@ public class PostPage {
 
 		} else if (adress.contains(".js")) {
 			postJs(adress);
+		} else if (UrlMethod.containsKey(adress)) {
+			appWeb(adress);
+		}
 
-		} else {
+		else
+
+		{
 			notFound();
 		}
 	}
@@ -143,7 +154,7 @@ public class PostPage {
 			System.err.println("Err: Unread File");
 		}
 	}
-	
+
 	private static void postJs(String adress) {
 		try {
 			HTMLOutput htmlOut = new HTMLOutput();
@@ -163,6 +174,48 @@ public class PostPage {
 			System.err.println("Err: Unread File");
 		}
 	}
+
+	private static void appWeb(String adress) {
+		LeerFicheros leer = new LeerFicheros();
+		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
+		Method m = UrlMethod.get(adress);
+		try {
+			String l = (String) m.invoke(null, null);
+			System.out.println("--------------------------------");
+			System.out.println("--------------------------------");
+			System.out.println(l);
+			PrintWriter response = new PrintWriter(clientSocket.getOutputStream(), true);
+			response.println("HTTP/1.1 200 OK");
+			response.println("Content-Type: text/html" + "\r\n");
+			response.println("<!DOCTYPE html>" + "\r\n");
+			response.println("<html>" + "\r\n");
+			response.println("<head>" + "\r\n");
+			response.println("<meta charset=\"UTF-8\">" + "\r\n");
+			response.println("<title>Title of the document</title>" + "\r\n");
+			response.println("</head>" + "\r\n");
+			response.println("<body>" + "\r\n");
+			response.println(l + "\r\n");
+			response.println("</body>" + "\r\n");
+			response.println("</html>" + "\r\n");
+			response.flush();
+			response.close();
+
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * publica en el servidor una pagina con un mensaje de error en caso de no
 	 * encontrar el archivo solicitado,
