@@ -8,7 +8,7 @@ import java.io.*;
  * crea servidor, espera comunicacion del cliente,
  * recibe peticiones
  * envia respuestas
- * @author Pedro Mayorga
+ * @author Andres Florez
  */
 public class ServerSckt {
     

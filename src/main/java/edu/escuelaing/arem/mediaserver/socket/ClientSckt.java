@@ -8,7 +8,7 @@ import java.net.*;
  * socket, se comunica con el servidor,
  * le envia peticiones
  * recibe respuestas
- * @author Pedro Mayorga
+ * @author Andres Florez
  */
 public class ClientSckt {
 

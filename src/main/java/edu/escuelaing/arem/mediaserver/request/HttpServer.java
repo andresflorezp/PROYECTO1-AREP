@@ -10,7 +10,7 @@ import java.net.*;
 /**
  * Declaracion de la clase HttpServer,
  * main principal del proyecto, desde donde corre el servidor
- * @author Pedro Mayorga
+ * @author Andres Florez
  * @version 2.0
  */
 public class HttpServer {

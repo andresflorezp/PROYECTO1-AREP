@@ -7,7 +7,7 @@ import java.net.*;
  * Declaracion de la clase HTMLOutput,
  * lee archivos .html y .png guardados en el proyecto y los interpreta,
  * para despues publicarlos en el servidor por medio de la clase PostPage
- * @author Pedro Mayorga
+ * @author Andres Florez
  */
 public class HTMLOutput {
     //declaracion atributos
