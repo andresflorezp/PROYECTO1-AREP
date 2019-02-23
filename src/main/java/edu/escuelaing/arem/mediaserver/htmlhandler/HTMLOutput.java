@@ -5,15 +5,15 @@ import java.net.*;
 
 /**
  * Declaracion de la clase HTMLOutput,
- * lee archivos .html y .png guardados en el proyecto y los interpreta,
+ * lee archivos .html,.png,.jpg,.js,.css guardados en el proyecto y los interpreta,
  * para despues publicarlos en el servidor por medio de la clase PostPage
  * @author Andres Florez
  */
 public class HTMLOutput {
     //declaracion atributos
-    private static String html = "";
-    private static String css = "";
-    private static String js = "";
+    private static String html = "";//cadena para concatenar la pagina html
+    private static String css = "";//cadena para concatenar la pagina css
+    private static String js = "";//cadena para concatenar la pagina javascript
 
     /**
      * lee una pagina web .html ubicada en una direccion y parsea su contenido a un string
@@ -40,7 +40,7 @@ public class HTMLOutput {
      * lee una imagen .png ubicada en una direccion y parsea su contenido en Bytes para poder visualizarla luego
      * @param adress se necesita saber cual es el nombre o direccion del archivo que contiene el codigo html a mostrar
      * @return imageBytes imagen parseada a Bytes para poder visualizarla desde el servidor
-     * @throws MalformedURLException 
+     * @throws MalformedURLException  excepcion
      */
     public static byte[] readImage(String adress) throws MalformedURLException {        
         byte[] imageBytes = null;
@@ -59,9 +59,9 @@ public class HTMLOutput {
    
     /**
      * Lee un archivo css ubicado en una direcciony guarda su contenido en un string
-     * @param adress
+     * @param adress path para archivo css
      * @return css string que contiene toda la lectura del archivo css
-     * @throws MalformedURLException
+     * @throws MalformedURLException excepcion
      */
     public static String readCSS(String adress) throws MalformedURLException {        
         try {            
@@ -77,6 +77,12 @@ public class HTMLOutput {
         }
         return css;
     }
+    /**
+     * Lee un archivo javaScript ubicado en una direcciony guarda su contenido en un string
+     * @param adress path para archivo javascript
+     * @return js string que contiene toda la lectura del archivo js
+     * @throws MalformedURLException excepcion
+     */
     public static String readJs(String adress) throws MalformedURLException {        
         try {            
             FileReader file = new FileReader("src/main/java/edu/escuelaing/arem/mediaserver/javascript"+adress);

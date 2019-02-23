@@ -34,8 +34,8 @@ import javax.imageio.ImageIO;
  */
 public class PostPage {
 	// declaracion de atributos privados
-	private static Socket clientSocket;
-	public static String[] par;
+	private static Socket clientSocket;//variable por la cual se permite hacer la conexion del socket cliente
+	private static String[] particion_address;//variable que permite hacer la particion del adress
 
 	/**
 	 * identifica que tipo de solicitud fue pedida al servidor, si se solicito una
@@ -65,12 +65,12 @@ public class PostPage {
 			postJs(adress);
 		
 		}else if(adress.contains(":")) { 
-			par = adress.split(":");
+			particion_address = adress.split(":");
 			
 		
-			if (UrlMethod.containsKey(par[0])) {
+			if (UrlMethod.containsKey(particion_address[0])) {
 				try {
-					appWeb(par[0]);
+					appWeb(particion_address[0]);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -150,6 +150,10 @@ public class PostPage {
 		}
 	}
 
+	/**
+	 * Este metodo permite visualizar paginas Css
+	 * @param adress adress se necesita saber la direccion para mostrar la pagina
+	 */
 	private static void postCss(String adress) {
 		try {
 			HTMLOutput htmlOut = new HTMLOutput();
@@ -170,6 +174,10 @@ public class PostPage {
 		}
 	}
 
+	/**
+	 * Este metodo permite visualizar paginas JavaScript
+	 * @param adress adress se necesita saber la direccion para mostrar la pagina
+	 */
 	private static void postJs(String adress) {
 		try {
 			HTMLOutput htmlOut = new HTMLOutput();
@@ -189,7 +197,11 @@ public class PostPage {
 			System.err.println("Err: Unread File");
 		}
 	}
-
+	
+	/**
+	 * Este metodo permite mostrar la pagina web de POJOS y Anotaciones
+	 * @param adress se necesita saber la direccion para mostrar la pagina
+	 */
 	private static void appWeb(String adress)  {
 		LeerFicheros leer = new LeerFicheros();
 		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
@@ -197,9 +209,9 @@ public class PostPage {
 		try {
 			String l = null ;
 
-			if(par.length==1)l = (String) m.invoke(null, null);
-			if(par.length==2)l = (String) m.invoke(null, par[1]);
-			if(par.length==3)l = (String) m.invoke(null, par[1],par[2]);
+			if(particion_address.length==1)l = (String) m.invoke(null, null);
+			if(particion_address.length==2)l = (String) m.invoke(null, particion_address[1]);
+			if(particion_address.length==3)l = (String) m.invoke(null, particion_address[1],particion_address[2]);
 			System.out.println("--------------------------------");
 			System.out.println("--------------------------------");
 			System.out.println(l);

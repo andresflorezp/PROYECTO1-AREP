@@ -15,15 +15,15 @@ import java.net.*;
  */
 public class HttpServer {
     //declaracion atributos privados
-    private static ServerSocket serverSocket;
-    private static Socket receiver;
-    private static URLRequest request = new URLRequest();
-    private static PostPage post = new PostPage();
+    private static ServerSocket serverSocket;//variable asociada al serversocket
+    private static Socket receiver;//variable asociada al socket cliente
+    private static URLRequest request = new URLRequest();//Obtiene la URL
+    private static PostPage post = new PostPage();//Permite colocar los encabezados de las paginas para mostrarlos
     
     /**
      * Creacion del main, que ejecutara todo el proyecto
-     * @param args
-     * @throws IOException 
+     * @param args argumentos del main
+     * @throws IOException excepcion de entrada
      */
     public static void main(String[] args) throws IOException {
         //recibe solicitudes no concurrentes

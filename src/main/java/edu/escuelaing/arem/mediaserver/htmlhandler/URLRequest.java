@@ -10,13 +10,13 @@ import java.net.Socket;
 /**
  * Declaracion de la clase URLRequest,
  * entrada de peticiones o solicitudes web que son leidas mediante el GET recibido en la direccion URL¨
- * @author Pedro Mayorga
+ * @author Andres Florez
  */
 public class URLRequest {
     //declaracion atributos
-    public static String adress = "";
-    public static BufferedReader in;
-    private static HTMLOutput htmlOut = new HTMLOutput();
+    public static String adress = "";//Direccion tomada del browser
+    public static BufferedReader in;//Permite la lectura
+    private static HTMLOutput htmlOut = new HTMLOutput();//Permite mostrar el HTML
     
     /**
      * lectura de la entrada del servidor web desde su clientSocket, obtencion de la solicitud GET en variable adress
