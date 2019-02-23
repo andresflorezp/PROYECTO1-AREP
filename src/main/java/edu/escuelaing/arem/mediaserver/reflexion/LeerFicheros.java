@@ -6,11 +6,10 @@ import java.lang.reflect.Method;
 import java.text.Annotation;
 import java.util.Arrays;
 import java.util.TreeMap;
-
+import java.util.*;
 public class LeerFicheros {
 	public static Class c;
 	public static TreeMap<String, Method> UrlMethod;
-
 	public LeerFicheros() {
 		try {
 			UrlMethod = new TreeMap();

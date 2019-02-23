@@ -30,11 +30,12 @@ import javax.imageio.ImageIO;
  * la clase URLRequest, despues de haber generado el respectivo html en la clase
  * HTMLOutput muestra la pagina web visualizada en el servidor
  * 
- * @author Pedro Mayorga
+ * @author Andres Florez
  */
 public class PostPage {
 	// declaracion de atributos privados
 	private static Socket clientSocket;
+	public static String[] par;
 
 	/**
 	 * identifica que tipo de solicitud fue pedida al servidor, si se solicito una
@@ -62,18 +63,27 @@ public class PostPage {
 
 		} else if (adress.contains(".js")) {
 			postJs(adress);
-		} else if (UrlMethod.containsKey(adress)) {
-			try {
-				appWeb(adress);
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+		}else if(adress.contains(":")) { 
+			par = adress.split(":");
+			
+		
+			if (UrlMethod.containsKey(par[0])) {
+				try {
+					appWeb(par[0]);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				notFound();
 			}
 		}
 
@@ -191,7 +201,11 @@ public class PostPage {
 		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
 		Method m = UrlMethod.get(adress);
 		try {
-			String l = (String) m.invoke(null, null);
+			String l = null ;
+
+			if(par.length==1)l = (String) m.invoke(null, null);
+			if(par.length==2)l = (String) m.invoke(null, par[1]);
+			if(par.length==3)l = (String) m.invoke(null, par[1],par[2]);
 			System.out.println("--------------------------------");
 			System.out.println("--------------------------------");
 			System.out.println(l);
@@ -205,7 +219,34 @@ public class PostPage {
 			response.println("<title>Title of the document</title>" + "\r\n");
 			response.println("</head>" + "\r\n");
 			response.println("<body>" + "\r\n");
-			response.println(l + "\r\n");
+			response.println(" <style>\n" + 
+					"        @import url('https://fonts.googleapis.com/css?family=Rubik');\n" + 
+					"\n" + 
+					"        * {\n" + 
+					"            font-family: 'Rubik', sans-serif;\n" + 
+					"        }\n" + 
+					"\n" + 
+					"        h1 {\n" + 
+					"            background: #001f3f;\n" + 
+					"            padding: 2.5%;\n" + 
+					"            color: #fff;\n" + 
+					"        }\n" + 
+					"\n" + 
+					"        #syllabus h3 {\n" + 
+					"            background: #85144b;\n" + 
+					"            padding: 1.5%;\n" + 
+					"            color: #fff;\n" + 
+					"            font-size: 0.5cm;\n" + 
+					"            display: inline-block;\n" + 
+					"            margin: 0;\n" + 
+					"\n" + 
+					"\n" + 
+					"        }\n" + 
+					"    </style>");
+			response.println("<div id=\"syllabus\">\n" + 
+					"        <h3>Pagina para app:</h3>");
+			response.println("</div>");
+			response.println("<h3>El resultado es:"+l+"</h3>"+ "\r\n");
 			response.println("</body>" + "\r\n");
 			response.println("</html>" + "\r\n");
 			response.flush();
