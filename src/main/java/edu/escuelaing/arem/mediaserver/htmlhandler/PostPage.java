@@ -71,13 +71,7 @@ public class PostPage {
 			if (UrlMethod.containsKey(par[0])) {
 				try {
 					appWeb(par[0]);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -196,7 +190,7 @@ public class PostPage {
 		}
 	}
 
-	private static void appWeb(String adress) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	private static void appWeb(String adress)  {
 		LeerFicheros leer = new LeerFicheros();
 		TreeMap<String, Method> UrlMethod = leer.UrlMethod;
 		Method m = UrlMethod.get(adress);
@@ -257,6 +251,15 @@ public class PostPage {
 			// si no encontro nada mande el error
 			notFound();
 			System.err.println("Err: Unread File");
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
