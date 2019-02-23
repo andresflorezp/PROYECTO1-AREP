@@ -6,7 +6,7 @@ Implementado desde cero y se sube igualmente a Heroku.
 
 
 Heroku link:
-https://mediaserveraremproject.herokuapp.com/index.html
+https://project-arep1.herokuapp.com/index.html
 
 Made by:
 Andres Florez
