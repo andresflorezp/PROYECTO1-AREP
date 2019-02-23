@@ -1,9 +1,9 @@
 package edu.escuelaing.arem.mediaserver.reflexion;
 
 /**
- * @author Andres
  * Esta clase es un POJO el cual contiene anotaciones que permiten correr la aplicacion
  * como si fuera un framework
+ * @author Andres
  */
 public class FrameWork {
 
